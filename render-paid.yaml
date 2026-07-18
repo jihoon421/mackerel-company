@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: mackerel-company
+    runtime: docker
+    region: singapore
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /app/data/mackerel-company.sqlite
+      - key: LOG_LEVEL
+        value: info
+      - key: ROOM_TTL_MINUTES
+        value: "30"
+      - key: RECONNECT_GRACE_SECONDS
+        value: "20"
+    disk:
+      name: mackerel-company-data
+      mountPath: /app/data
+      sizeGB: 1

@@ -1,0 +1,39 @@
+{
+  "name": "mackerel-company",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Mackerel Company: Another Shift - mobile cooperative survival web game",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,cyan \"npm run dev -w @mackerel/server\" \"npm run dev -w @mackerel/client\"",
+    "typecheck": "tsc -p tsconfig.json && npm run typecheck --workspaces --if-present",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "build": "npm run build -w @mackerel/shared && npm run build -w @mackerel/content && npm run build -w @mackerel/simulation && npm run build -w @mackerel/client && npm run build -w @mackerel/server",
+    "start": "node apps/server/dist/index.js",
+    "loadtest": "tsx scripts/load-test.ts",
+    "test:multiplayer": "npm run build -w @mackerel/server && tsx scripts/multiplayer-smoke.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.2",
+    "@playwright/test": "1.61.1",
+    "@rollup/rollup-linux-x64-gnu": "^4.62.2",
+    "@types/node": "26.1.1",
+    "concurrently": "10.0.3",
+    "eslint": "9.39.2",
+    "globals": "16.5.0",
+    "tsx": "4.23.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.64.0",
+    "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "license": "MIT",
+  "type": "module"
+}
